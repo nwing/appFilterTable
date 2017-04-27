@@ -1,5 +1,3 @@
-'use strict';
-
 /***************************/
 /* Antony tasayco cappillo */
 /* Antony.exe@gmail.com */
@@ -20,9 +18,9 @@
 		self.configPagination(false);
 		// -- Filter
 		self.filter(tableRad1Us.configParameters.tableId);
-
-
 		/************************************************/
+		// -- Sorted
+		self.sorted(tableRad1Us.configParameters.tableId, false);
 	},
 	configPagination: function(filter){
 		var self = this;
@@ -95,16 +93,39 @@
 				$(table).hide();
 				$('#showTable').append(cloneTable);
 				self.configPagination(true);
+				self.sorted(tableRad1Us.fixedVar.filterIdTable, true);
 			} else {
 				if($(tableRad1Us.fixedVar.filterIdTable).length ) {
 					$(tableRad1Us.fixedVar.filterIdTable).remove();
 					$(table).show();
 					self.configPagination(false);
+					self.sorted(table, false);
 				}
 			}
 		})
+	},
+	sorted: function(table, filter){
+		var self = this;
+		var sortDescending = false;
+		$(document).on("click", table+' thead tr th', function(){
+			var thIndex = $(this).index();
+			sorting = [];
+			tbodyHtml = null;
+			$(table+' tbody tr').each(function(){
+				sorting.push($(this).show().children('td').eq(thIndex).html() + ', ' + $(this).index());
+			});
+			sorting = sorting.sort();
+			if(sortDescending)
+				sorting.reverse();
+			for(var sortingIndex = 0; sortingIndex < sorting.length; sortingIndex++){
+				rowId = parseInt(sorting[sortingIndex].split(', ')[1]);
+				tbodyHtml = tbodyHtml + $(table+' tbody tr').eq(rowId)[0].outerHTML;
+			}
+			sortDescending = sortDescending == false ? true : false;
+			$(table+' tbody').html(tbodyHtml);
+			self.configPagination(filter);
+		});
 	}
-
 };
 
 tableRad1Us.init();
