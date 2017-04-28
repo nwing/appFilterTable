@@ -2,6 +2,14 @@
 /* Antony tasayco cappillo */
 /* Antony.exe@gmail.com */
 /***************************/
+
+// -- Contains Case-Insensitive
+$.expr[":"].contains = $.expr.createPseudo(function(arg) {
+	return function( elem ) {
+		return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+	};
+});
+
 ;tableRad1Us = {
 	fixedVar: {
 		filterIdTable: '#filterList'
@@ -9,7 +17,8 @@
 	configParameters: {
 		tableId : '#listAgenda',
 		perPage : 2,
-		filterId : '#inputFilter'
+		filterId : '#inputFilter',
+		tableList: '#tableList'
 	},
 	init: function(parameters){
 		var self = this;
@@ -81,7 +90,7 @@
 	},
 	filter: function(table){
 		var self = this;
-		$(tableRad1Us.configParameters.filterId).change(function () {
+		$(tableRad1Us.configParameters.filterId).keyup(function () {
 			if (this.value.length) {
 				if($(tableRad1Us.fixedVar.filterIdTable).length ) {
 					$(tableRad1Us.fixedVar.filterIdTable).remove();
@@ -91,7 +100,7 @@
 				cloneTable.find("td.colName:contains('" + $(this).val() + "')").parent().attr('data-show', 'TRUE').css('display', '');
 				cloneTable.find("td.colName:not(:contains('" + $(this).val() + "'))").parent().remove();
 				$(table).hide();
-				$('#showTable').append(cloneTable);
+				$(tableRad1Us.configParameters.tableList).append(cloneTable);
 				self.configPagination(true);
 				self.sorted(tableRad1Us.fixedVar.filterIdTable, true);
 			} else {
