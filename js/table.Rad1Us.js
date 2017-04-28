@@ -146,6 +146,23 @@ $(function(){
 		listRow += '<li>'+ $(r).text() +'</li>';
 	});
 	$('#listRow').append(listRow);
+	// Modal
+	$(document).on("click", 'table tbody img', function(e){
+		var contenHtml = '',
+				getImageSrc = $(this).attr('src');
+		contenHtml += ' <a href="#" id="modal-close">x</a>';
+		contenHtml += '<img id="showImageModal" src="'+ getImageSrc +'" alt="" />';
+		$("#modal-content").html(contenHtml);
+		$("#modal-content,#modal-background").toggleClass("active");
+		e.preventDefault();
+	});
+
+	$(document).on("click", '#modal-close', function(e){
+		$("#modal-content,#modal-background").toggleClass("active");
+		e.preventDefault();
+	});
+
+
 });
 
 // Sticky
@@ -157,3 +174,4 @@ $(window).scroll(function(){
 });
 
 
+// 
