@@ -137,4 +137,23 @@ $.expr[":"].contains = $.expr.createPseudo(function(arg) {
 	}
 };
 
-tableRad1Us.init();
+$(function(){
+	// Init: Table
+	tableRad1Us.init();
+	// Sticky: Generate Sticky list
+	var listRow = '';
+	$('#listAgenda thead tr th').each(function(i, r) {
+		listRow += '<li>'+ $(r).text() +'</li>';
+	});
+	$('#listRow').append(listRow);
+});
+
+// Sticky
+$(window).scroll(function(){
+	var sticky = $('.sticky'),
+			scroll = $(window).scrollTop();
+	if (scroll >= 100) sticky.addClass('fixed');
+	else sticky.removeClass('fixed');
+});
+
+
