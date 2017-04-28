@@ -16,7 +16,7 @@ $.expr[":"].contains = $.expr.createPseudo(function(arg) {
 	},
 	configParameters: {
 		tableId : '#listAgenda',
-		perPage : 2,
+		perPage : 10,
 		filterId : '#inputFilter',
 		tableList: '#tableList'
 	},
